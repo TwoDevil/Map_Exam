@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Login</TextBlock>
-        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">Пароль</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">Password</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="0" Name="Login"></TextBox>
         <TextBox Grid.Column="1" Grid.Row="1" Name="Password"> </TextBox>
         <Button Grid.Column="1" Grid.Row="2" Click="Button_Click_Login">Вход</Button>
