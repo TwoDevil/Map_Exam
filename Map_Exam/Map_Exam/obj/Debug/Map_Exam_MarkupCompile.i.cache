@@ -4,16 +4,28 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 G:\GitHub\Map_Exam\Map_Exam\obj\Debug\
+=======
+G:\Git\Map_Exam\Map_Exam\obj\Debug\
+>>>>>>> refs/remotes/origin/master
 Map_Exam
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 G:\GitHub\Map_Exam\Map_Exam\App.xaml
 21491102197
 
 10-1658451777
 15-635500641
+=======
+G:\Git\Map_Exam\Map_Exam\App.xaml
+21491102197
+
+10-2118965794
+15-1920204329
+>>>>>>> refs/remotes/origin/master
 MainWindow.xaml;Map.xaml;
 
 False
