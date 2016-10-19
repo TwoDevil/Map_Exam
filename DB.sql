@@ -6,15 +6,6 @@ Password nvarchar2(50) NOT NULL,
 Status nvarchar2(10)
 );
 
-CREATE TABLE Waypoint(
-Id number(10) NOT NULL PRIMARY KEY, 
-id_Roat number(10) NOT NULL,
-Name nvarchar2(50),
-Coordinates nvarchar2(50) NOT NULL,
-Description nvarchar2(50),
-Image nvarchar2(50),
-CONSTRAINT PK_Waypoint_Roat FOREIGN KEY (id_Roat) REFERENCES Roat(Id) 
-);
 
 CREATE TABLE Roat(
 Id number(10) NOT NULL PRIMARY KEY, 
@@ -27,6 +18,26 @@ Type nvarchar2(10),
 Description nvarchar2(50),
 CONSTRAINT PK_Roat FOREIGN KEY (Id_User) REFERENCES Users(Id)
 );
+
+SELECT name,Country,City,Duration_Day,type,Description FROM roat INNER JOIN USERS ON users.ID=ID_User
+ORDER BY Duration_Day;
+/*
+ORDER BY City;
+ORDER BY Country;
+ORDER BY Type;
+*/
+
+CREATE TABLE Waypoint(
+Id number(10) NOT NULL PRIMARY KEY, 
+id_Roat number(10) NOT NULL,
+Name nvarchar2(50),
+Coordinates nvarchar2(50) NOT NULL,
+Description nvarchar2(50),
+Image nvarchar2(50),
+CONSTRAINT PK_Waypoint_Roat FOREIGN KEY (id_Roat) REFERENCES Roat(Id) 
+);
+
+SELECT name,Coordinates,Description,Image FROM Waypoint INNER JOIN Roat ON Roat.ID=id_Roat;
 
 
 CREATE TABLE Comments(
@@ -46,13 +57,6 @@ Id_Roat number(10) NOT NULL,
 CONSTRAINT PK_Likes_Id_User FOREIGN KEY (Id_User) REFERENCES Users(Id),
 CONSTRAINT PK_Likes_Id_Roat FOREIGN KEY (Id_Roat) REFERENCES Roat(Id)
 );
-
-create or replace table qwerty
-(
-Id number not null primary key,
-tedt number not null
-)
-
 
 CREATE TABLE Reports(
 Id number(10) NOT NULL PRIMARY KEY, 
