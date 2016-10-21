@@ -1,0 +1,182 @@
+
+
+
+CREATE TABLE USERS(
+Id number(10) NOT NULL PRIMARY KEY, 
+Full_Name nvarchar2(50) NOT NULL,
+Login nvarchar2(50) NOT NULL,
+Password nvarchar2(50) NOT NULL,
+Status nvarchar2(10)
+);
+
+CREATE TABLE Waypoint(
+Id number(10) NOT NULL PRIMARY KEY, 
+id_Roat number(10) NOT NULL,
+Name nvarchar2(50),
+Coordinates nvarchar2(50) NOT NULL,
+Description nvarchar2(50),
+Image nvarchar2(50),
+CONSTRAINT FK_Waypoint_Roat FOREIGN KEY (id_Roat) REFERENCES Roat(Id) 
+);
+
+CREATE TABLE Roat(
+Id number(10) NOT NULL PRIMARY KEY, 
+Id_User number(10) NOT NULL,
+Name nvarchar2(50) NOT NULL,
+Country nvarchar2(20) NOT NULL,
+City nvarchar2(20) NOT NULL,
+Duration_Day number NOT NULL,
+Type nvarchar2(10),
+Description nvarchar2(50),
+CONSTRAINT FK_Roat FOREIGN KEY (Id_User) REFERENCES Users(Id)
+);
+
+
+CREATE TABLE Comments(
+Id number(10) NOT NULL PRIMARY KEY, 
+Id_User number(10) NOT NULL,
+Id_Roat number(10) NOT NULL,
+Description nvarchar2(100) NOT NULL,
+CONSTRAINT FK_Comments_Id_User FOREIGN KEY (Id_User) REFERENCES Users(Id),
+CONSTRAINT FK_Comments_Id_Roat FOREIGN KEY (Id_Roat) REFERENCES Roat(Id)
+);
+
+create table Likes(
+Id number(10) NOT NULL PRIMARY KEY, 
+Id_User number(10) NOT NULL,
+Id_Roat number(10) NOT NULL,
+Likes number NOT NULL,
+CONSTRAINT FK_Likes_Id_User FOREIGN KEY (Id_User) REFERENCES Users(Id),
+CONSTRAINT FK_Likes_Id_Roat FOREIGN KEY (Id_Roat) REFERENCES Roat(Id)
+);
+
+CREATE TABLE Reports(
+Id number(10) NOT NULL PRIMARY KEY, 
+Id_User number(10) NOT NULL,
+Id_User_Moderator number(10),
+Id_Roat number(10) NOT NULL,
+Description nvarchar2(100) NOT NULL,
+CONSTRAINT FK_Reports_Id_User FOREIGN KEY (Id_User) REFERENCES Users(Id),
+CONSTRAINT FK_Reports_Id_Roat FOREIGN KEY (Id_Roat) REFERENCES Roat(Id),
+CONSTRAINT FK_Reports_Id_User_Moderator FOREIGN KEY (Id_User_Moderator) REFERENCES Users(Id)
+);
+
+
+CREATE SEQUENCE New_User_Sequence
+  MINVALUE 1
+  MAXVALUE 9999999
+  START WITH 1
+  INCREMENT BY 1
+  CACHE 20;
+  
+  CREATE SEQUENCE New_Comments_Sequence
+  MINVALUE 1
+  MAXVALUE 9999999
+  START WITH 1
+  INCREMENT BY 1
+  CACHE 20;  
+  
+CREATE SEQUENCE New_Reports_Sequence
+  MINVALUE 1
+  MAXVALUE 9999999
+  START WITH 1
+  INCREMENT BY 1
+  CACHE 20;  
+  
+CREATE SEQUENCE New_Roat_Sequence
+  MINVALUE 1
+  MAXVALUE 9999999
+  START WITH 1
+  INCREMENT BY 1
+  CACHE 20;  
+  
+  CREATE SEQUENCE New_Likes_Sequence
+  MINVALUE 1
+  MAXVALUE 9999999
+  START WITH 1
+  INCREMENT BY 1
+  CACHE 20;  
+  
+  CREATE SEQUENCE New_Waypoint_Sequence
+  MINVALUE 1
+  MAXVALUE 9999999
+  START WITH 1
+  INCREMENT BY 1
+  CACHE 20;  
+  
+  
+ CREATE OR REPLACE TRIGGER Triger_Insert_User
+   BEFORE INSERT ON Users
+   FOR EACH ROW
+   WHEN (NEW.ID IS NULL)
+BEGIN
+   SELECT New_User_Sequence.NEXTVAL INTO :NEW.id FROM DUAL;
+END;
+
+ CREATE OR REPLACE TRIGGER Triger_Insert_Comments
+   BEFORE INSERT ON Users
+   FOR EACH ROW
+   WHEN (NEW.ID IS NULL)
+BEGIN
+   SELECT New_Comments_Sequence.NEXTVAL INTO :NEW.id FROM DUAL;
+END;
+
+ CREATE OR REPLACE TRIGGER Triger_Insert_Likes
+   BEFORE INSERT ON Users
+   FOR EACH ROW
+   WHEN (NEW.ID IS NULL)
+BEGIN
+   SELECT New_Likes_Sequence.NEXTVAL INTO :NEW.id FROM DUAL;
+END;
+
+
+ CREATE OR REPLACE TRIGGER Triger_Insert_Reports
+   BEFORE INSERT ON Users
+   FOR EACH ROW
+   WHEN (NEW.ID IS NULL)
+BEGIN
+   SELECT New_Reports_Sequence.NEXTVAL INTO :NEW.id FROM DUAL;
+END;
+
+ CREATE OR REPLACE TRIGGER Triger_Insert_Roat
+   BEFORE INSERT ON Users
+   FOR EACH ROW
+   WHEN (NEW.ID IS NULL)
+BEGIN
+   SELECT New_Roat_Sequence.NEXTVAL INTO :NEW.id FROM DUAL;
+END;
+
+
+ CREATE OR REPLACE TRIGGER Triger_Insert_Waypoint
+   BEFORE INSERT ON Users
+   FOR EACH ROW
+   WHEN (NEW.ID IS NULL)
+BEGIN
+   SELECT New_Waypoint_Sequence.NEXTVAL INTO :NEW.id FROM DUAL;
+END;
+
+CREATE or REPLACE FUNCTION get_user(user_login IN NVARCHAR2,user_password in NVARCHAR2) 
+   RETURN NUMBER 
+   IS acc_ NUMBER;
+   BEGIN 
+   acc_:=0;
+      SELECT ID
+      INTO acc_ 
+      FROM Users 
+      WHERE Login =user_login and Password=user_password; 
+      RETURN(acc_);
+      EXCEPTION 
+      WHEN OTHERS THEN 
+      RETURN(0);
+    END;
+  
+  INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Дмитрий Малых','Diman','1111','user');
+  INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Олег Шейн','Sheun','1111','user');
+  
+  SET SERVEROUTPUT ON;
+  
+  BEGIN
+  DBMS_OUTPUT.PUT_LINE(get_user('Diman','1111'));
+  end;
+  
+  

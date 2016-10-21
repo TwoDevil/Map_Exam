@@ -119,7 +119,8 @@ namespace Map_Exam
 
                 ListDot.Items.Clear();
                 foreach (var item in dot.Lpll)
-                    ListDot.Items.Add(item.ToString());
+                    ListDot.Items.Add(item.Lng.ToString()+" "+item.Lat.ToString());
+                ListDot.Items.Add("ok");
             }
             createWarpPoint = false;
         }
@@ -141,6 +142,8 @@ namespace Map_Exam
                 Create_Map.Content = "Закончить машрут";
                 //DotSave.IsEnabled = true;
                 createWarpPoint = true;
+                ListDot.Items.Clear();
+                ListDot.Items.Add("ok");
             }
             createMap = !createMap;
             
