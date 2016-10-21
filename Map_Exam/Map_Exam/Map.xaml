@@ -44,7 +44,7 @@
             <RadioButton Grid.Row="5" HorizontalAlignment="Center" Name="CheckDuration">Длительность</RadioButton>
             <RadioButton Grid.Row="6" HorizontalAlignment="Center" Name="CheckType">Тип</RadioButton>
             <Button Grid.Row="7" Name="But_Filtr" Click="But_Filtr_Click">Фильтровать</Button>
-            <Button Grid.Row="8" Name="Create_Route">Создать маршрут</Button>
+            <Button Grid.Row="8" Click="Create_Map_Click" Name="Create_Map">Создать маршрут</Button>
             <ListBox Grid.Row="9" Name="ListRoat" SelectionChanged="ListRoat_SelectionChanged" ></ListBox>
             <Grid Grid.Row="10">
                 <Grid.RowDefinitions>
@@ -73,8 +73,6 @@
                 <RowDefinition Height="20"></RowDefinition>
                 <RowDefinition Height="20"></RowDefinition>
                 <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="120"></RowDefinition>
             </Grid.RowDefinitions>
@@ -86,12 +84,10 @@
             <TextBox Grid.Row="5" Name="RoatDuration">Длительность</TextBox>
             <TextBox Grid.Row="6" Name="RoatType">Тип</TextBox>
             <TextBox Grid.Row="7" Name="RoatStatus">Состояние</TextBox>
-            <Button Grid.Row="8" Click="Create_Map_Click" Name="Create_Map">Создать Маршрут</Button>
-            <Button Grid.Row="9" Name="Change_Route" >Изменить маршрут</Button>
-            <Button Grid.Row="10" Name="Save_Route" Click="Save_Route_Click">Сохранить маршрут</Button>
-            <ListBox Grid.Row="11" Name="ListDot" SelectionChanged="ListDot_SelectionChanged"></ListBox>
+            <Button Grid.Row="8" Name="Change_Route" >Изменить маршрут</Button>
+            <ListBox Grid.Row="9" Name="ListDot" SelectionChanged="ListDot_SelectionChanged"></ListBox>
 
-            <Grid Grid.Row="12">
+            <Grid Grid.Row="10">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="2*"></RowDefinition>
@@ -103,7 +99,7 @@
                 <TextBox Grid.Row="1" Name="DotDescript">Описание</TextBox>
                 <TextBox Grid.Row="2" Name="DotCoord">Координаты</TextBox>
                 <TextBox Grid.Row="3" Name="DotImage">Изображение</TextBox>
-                <Button Grid.Row="4" Name="DotSave" IsEnabled="False">Сохранить</Button>
+                <Button Grid.Row="4" Name="DotSave" IsEnabled="False" Click="DotSave_Click">Сохранить</Button>
             </Grid>
         </Grid>
     </Grid>
