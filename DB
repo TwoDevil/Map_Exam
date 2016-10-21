@@ -1,6 +1,3 @@
-
-
-
 CREATE TABLE USERS(
 Id number(10) NOT NULL PRIMARY KEY, 
 Full_Name nvarchar2(50) NOT NULL,
@@ -8,7 +5,7 @@ Login nvarchar2(50) NOT NULL,
 Password nvarchar2(50) NOT NULL,
 Status nvarchar2(10)
 );
-
+INSERT INTO Waypoint(Id_roat,Name,Coordinates,Description,Image) VALUES(1,'Test','11,11','Test','test.png');
 CREATE TABLE Waypoint(
 Id number(10) NOT NULL PRIMARY KEY, 
 id_Roat number(10) NOT NULL,
@@ -18,7 +15,7 @@ Description nvarchar2(50),
 Image nvarchar2(50),
 CONSTRAINT FK_Waypoint_Roat FOREIGN KEY (id_Roat) REFERENCES Roat(Id) 
 );
-
+INSERT INTO Roat(Id_User,Name,Country,City,Duration_Day) VALUES(1,'TestRoat','Test Country','Test City',5);
 CREATE TABLE Roat(
 Id number(10) NOT NULL PRIMARY KEY, 
 Id_User number(10) NOT NULL,
@@ -168,10 +165,27 @@ CREATE or REPLACE FUNCTION get_user(user_login IN NVARCHAR2,user_password in NVA
       EXCEPTION 
       WHEN OTHERS THEN 
       RETURN(0);
+    end;
+    
+   CREATE or REPLACE FUNCTION get_user_like(user_id IN NUMBER,roat_id IN NUMBER) 
+   RETURN NUMBER 
+   IS acc_ NUMBER;
+   BEGIN 
+      SELECT ID
+      INTO acc_ 
+      FROM Likes 
+      WHERE ID_USER =user_id and ID_ROAT=roat_id; 
+      RETURN(acc_);
+      EXCEPTION 
+      WHEN OTHERS THEN 
+      INSERT INTO Likes(ID_USER,ID_ROAT,LIKES) VALUES(user_id,roat_id,0);
+      RETURN(0);
     END;
   
   INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Дмитрий Малых','Diman','1111','user');
   INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Олег Шейн','Sheun','1111','user');
+  
+  
   
   SET SERVEROUTPUT ON;
   
