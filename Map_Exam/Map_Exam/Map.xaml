@@ -35,6 +35,7 @@
                 <RowDefinition Height="20"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="120"></RowDefinition>
+                <RowDefinition Height="60" Name="ReportsRoat"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" HorizontalAlignment="Center">Имя Пользователя</TextBlock>
             <TextBlock Grid.Row="1" HorizontalAlignment="Center">Роль и статус</TextBlock>
@@ -60,6 +61,14 @@
                 <Button Grid.Row="3" Name="But_Comment" Click="But_Comment_Click">Оставить коментарий</Button>
                 <Button Grid.Row="4" Name="But_Complaite" Click="But_Complaite_Click">Оставить Жалобу</Button>
             </Grid>
+            <Grid Grid.Row="11">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0">Название</ComboBox>
+                <TextBox Grid.Row="1">Описание</TextBox>
+            </Grid>
 
         </Grid>
         <Grid Grid.Column="2">
@@ -75,6 +84,7 @@
                 <RowDefinition Height="20"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="120"></RowDefinition>
+                <RowDefinition Height="60" Name="CommentRoat"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Name="UserName" HorizontalAlignment="Center">Имя пользователя</TextBlock>
             <TextBox Grid.Row="1" Name="RoatName">Название</TextBox>
@@ -100,6 +110,14 @@
                 <TextBox Grid.Row="2" Name="DotCoord">Координаты</TextBox>
                 <TextBox Grid.Row="3" Name="DotImage">Изображение</TextBox>
                 <Button Grid.Row="4" Name="DotSave" IsEnabled="False" Click="DotSave_Click">Сохранить</Button>
+            </Grid>
+            <Grid Grid.Row="11">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0">Название</ComboBox>
+                <TextBox Grid.Row="1">Описание</TextBox>
             </Grid>
         </Grid>
     </Grid>

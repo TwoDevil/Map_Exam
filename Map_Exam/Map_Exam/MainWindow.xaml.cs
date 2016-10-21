@@ -23,6 +23,7 @@ namespace Map_Exam
     public partial class MainWindow : Window
     {
         OracleConnection oracleConn { get; set; }
+        bool fullNameRegistr { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -37,38 +38,47 @@ namespace Map_Exam
                 Close();
             }
         }
+        public void LoginToMap()
+        {
+            try
+            {
+                OracleCommand com = new OracleCommand("BEGIN get_user('" + Login.Text + "','" + Password.Text + "') END", oracleConn);
+                var res = com.ExecuteScalar();
+
+                if ((int)res != 0)
+                {
+                    Map m = new Map();
+                    m.Show();
+                    Close();
+                }
+                else
+                {
+                }
+            }
+            catch { }
+        }
 
         private void Button_Click_Login(object sender, RoutedEventArgs e)
         {
-            OracleCommand com = new OracleCommand();
-            com.Connection = oracleConn;
-            com.CommandText = "BEGIN PROVER('" + Login.Text + "','" + Password.Text + "') END";
-            var res = com.ExecuteScalar();
-
-            if ((bool)res == true)
-            {
-            }
-            else
-            {
-            }
+            LoginToMap();
 
         }
 
         private void Button_Click_Registr(object sender, RoutedEventArgs e)
         {
-            if (Login.Text != null && Password.Text != null)
-                try
-                {
-                    OracleCommand com = new OracleCommand("INSERT INTO OPERATOR_(NAME,PSWD) VALUES('" + Login.Text + "','"
-                        + Password.Text + "')", oracleConn);
-                    var res = com.ExecuteReader();
-                    //while (res.Read())
-                    //{
-                    //    Console.WriteLine(res[1].ToString());
-                    //}
-                }
-                catch { }
-
+            if (!fullNameRegistr)
+                FullNameRegistr.Height = new GridLength(1,GridUnitType.Star);
+            else
+                if (Login.Text != null && Password.Text != null && FullName.Text != null)
+                    try
+                    {
+                        OracleCommand com = new OracleCommand("INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('"
+                            + FullName.Text + "','" + Login.Text + "','" + Password.Text + "','user')", oracleConn);
+                        var res = com.ExecuteReader();
+                        LoginToMap();
+                    }
+                    catch { }
+            fullNameRegistr = true;
         }
     }
 }

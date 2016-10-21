@@ -169,9 +169,10 @@ CREATE or REPLACE FUNCTION get_user(user_login IN NVARCHAR2,user_password in NVA
       WHEN OTHERS THEN 
       RETURN(0);
     END;
+  Select * FROM Users;
   
-  INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Дмитрий Малых','Diman','1111','user');
-  INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Олег Шейн','Sheun','1111','user');
+  INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Dimas','Diman','1111','user');
+  INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Oleg','Sheun','1111','user');
   
   SET SERVEROUTPUT ON;
   

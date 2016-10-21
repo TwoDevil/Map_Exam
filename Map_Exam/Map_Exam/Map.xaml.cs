@@ -77,16 +77,17 @@ namespace Map_Exam
         OracleConnection oracleConn { get; set; }
         bool createMap { get; set; }
         bool createWarpPoint { get; set; }
+        int id_User { get; set; }
         public Map()
         {
             InitializeComponent();
-            
+            id_User=1;
             oracleConn = new OracleConnection("Data Source=10.3.0.227;User Id=Sheun;Password=1111;");
             try
             {
                 oracleConn.Open();
             }
-            catch (Exception e)
+            catch 
             {
                 oracleConn.Close();
                 Close();
@@ -121,6 +122,8 @@ namespace Map_Exam
                 foreach (var item in dot.Lpll)
                     ListDot.Items.Add(item.Lng.ToString()+" "+item.Lat.ToString());
                 ListDot.Items.Add("ok");
+
+                
             }
             createWarpPoint = false;
         }
