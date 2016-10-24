@@ -5,6 +5,7 @@ Login nvarchar2(50) NOT NULL,
 Password nvarchar2(50) NOT NULL,
 Status nvarchar2(10)
 );
+
 INSERT INTO Waypoint(Id_roat,Name,Coordinates,Description,Image) VALUES(1,'Test','11,11','Test','test.png');
 CREATE TABLE Waypoint(
 Id number(10) NOT NULL PRIMARY KEY, 
@@ -15,6 +16,7 @@ Description nvarchar2(50),
 Image nvarchar2(50),
 CONSTRAINT FK_Waypoint_Roat FOREIGN KEY (id_Roat) REFERENCES Roat(Id) 
 );
+
 INSERT INTO Roat(Id_User,Name,Country,City,Duration_Day) VALUES(1,'TestRoat','Test Country','Test City',5);
 CREATE TABLE Roat(
 Id number(10) NOT NULL PRIMARY KEY, 

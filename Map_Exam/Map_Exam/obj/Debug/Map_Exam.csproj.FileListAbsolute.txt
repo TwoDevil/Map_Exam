@@ -97,8 +97,6 @@ E:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.csproj.GenerateResource.Cache
 E:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.exe
 E:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.pdb
 G:\Git\Map_Exam\Map_Exam\bin\Debug\Map_Exam.exe.config
-G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.exe
-G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.pdb
 G:\Git\Map_Exam\Map_Exam\bin\Debug\Map_Exam.exe
 G:\Git\Map_Exam\Map_Exam\bin\Debug\Map_Exam.pdb
 G:\Git\Map_Exam\Map_Exam\bin\Debug\GMap.NET.Core.dll
@@ -106,7 +104,6 @@ G:\Git\Map_Exam\Map_Exam\bin\Debug\GMap.NET.WindowsPresentation.dll
 G:\Git\Map_Exam\Map_Exam\bin\Debug\Oracle.ManagedDataAccess.dll
 G:\Git\Map_Exam\Map_Exam\bin\Debug\GMap.NET.Core.xml
 G:\Git\Map_Exam\Map_Exam\bin\Debug\GMap.NET.WindowsPresentation.xml
-G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.csprojResolveAssemblyReference.cache
 G:\Git\Map_Exam\Map_Exam\obj\Debug\MainWindow.baml
 G:\Git\Map_Exam\Map_Exam\obj\Debug\Map.baml
 G:\Git\Map_Exam\Map_Exam\obj\Debug\MainWindow.g.cs
@@ -116,3 +113,6 @@ G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam_MarkupCompile.cache
 G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.g.resources
 G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.Properties.Resources.resources
 G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.csproj.GenerateResource.Cache
+G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.exe
+G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.pdb
+G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.csprojResolveAssemblyReference.cache
