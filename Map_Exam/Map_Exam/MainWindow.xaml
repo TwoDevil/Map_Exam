@@ -2,12 +2,38 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:gmap="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Map_Exam"
+        mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="600">
+    <Window.Resources>
+
+        <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
+        <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
+        <SolidColorBrush x:Key="brushWatermarkBorder" Color="Indigo" />
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+        <Style x:Key="EntryFieldStyle" TargetType="Grid" >
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Name="RegistrRow" ></RowDefinition>
             <RowDefinition Name="MapRow" Height="0"> </RowDefinition>
-        </Grid.RowDefinitions>
+            <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="2" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+                <TextBlock Margin="5,2" Text="This prompt dissappears as you type..." Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=txtUserEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Name="txtUserEntry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            </Grid>
+        
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
@@ -20,14 +46,26 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
+            <TextBlock Margin="5,2" Text="Введите Логин" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Login, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Grid.Column="1" Grid.Row="0"/>
+            <TextBlock Margin="5,2" Text="Введите Пароль" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Password, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                        Grid.Column="1" Grid.Row="1"/>
+            <TextBlock Margin="5,2" Text="Введите Имя Пользователя" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=FullName, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                        Grid.Column="1" Grid.Row="2"/>
+            
             <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Логин</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">Пароль</TextBlock>
-            <TextBox Grid.Column="1" Grid.Row="0" Name="Login"></TextBox>
-            <TextBox Grid.Column="1" Grid.Row="1" Name="Password"></TextBox>
+            <TextBox Grid.Column="1" Grid.Row="0" Name="Login" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+            <TextBox Grid.Column="1" Grid.Row="1" Name="Password" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">Полное имя</TextBlock>
-            <TextBox Grid.Column="1" Grid.Row="2" Name="FullName"></TextBox>
+            <TextBox Grid.Column="1" Grid.Row="2" Name="FullName" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
             <Button Grid.Column="1" Grid.Row="3" Click="Button_Click_Login">Вход</Button>
             <Button Grid.Column="0" Grid.Row="3" Click="Button_Click_Registr">Регистрация</Button>
+            
+
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -63,7 +101,7 @@
                     <RowDefinition Height="120"></RowDefinition>
                     <RowDefinition Height="60" Name="ReportsRoat"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" HorizontalAlignment="Center">Имя Пользователя</TextBlock>
+                <TextBlock Grid.Row="0" HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="1" HorizontalAlignment="Center">Роль и статус</TextBlock>
                 <TextBox Grid.Row="2" Name="TextFiltr">Текст фильтра</TextBox>
                 <RadioButton Grid.Row="3" HorizontalAlignment="Center" Name="CheckCountry" IsChecked="True">Страна</RadioButton>
@@ -82,8 +120,10 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Button Grid.Row="0" Click="But_Like_Click" Name="But_Like">Лайкнуть</Button>
-                    <TextBox Grid.Row="1" Name="Route_Descript">Описание</TextBox>
-                    <ComboBox Grid.Row="2" Name="ComboModer">Описание</ComboBox>
+                    <TextBlock Margin="5,2" Text="Описание" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="1"
+                       Visibility="{Binding ElementName=FullName, Path=Route_Descript.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBox Grid.Row="1" Name="Route_Descript" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                    <ComboBox Grid.Row="2" Name="ComboModer"></ComboBox>
                     <Button Grid.Row="3" Name="But_Comment" Click="But_Comment_Click">Оставить коментарий</Button>
                     <Button Grid.Row="4" Name="But_Complaite" Click="But_Complaite_Click">Оставить Жалобу</Button>
                 </Grid>
@@ -93,7 +133,7 @@
                         <RowDefinition Height="2*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <ComboBox Grid.Row="0">Название</ComboBox>
-                    <TextBox Grid.Row="1">Описание</TextBox>
+                    <TextBlock Grid.Row="1">Описание</TextBlock>
                 </Grid>
 
             </Grid>
@@ -113,13 +153,27 @@
                     <RowDefinition Height="60" Name="CommentRoat"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Name="UserName" HorizontalAlignment="Center">Имя пользователя</TextBlock>
-                <TextBox Grid.Row="1" Name="RoatName">Название</TextBox>
-                <TextBox Grid.Row="2" Name="RoatDescript">Описание</TextBox>
-                <TextBox Grid.Row="3" Name="RoatCity">Страна</TextBox>
-                <TextBox Grid.Row="4" Name="RoatContry">Город</TextBox>
-                <TextBox Grid.Row="5" Name="RoatDuration">Длительность</TextBox>
-                <TextBox Grid.Row="6" Name="RoatType">Тип</TextBox>
-                <TextBox Grid.Row="7" Name="RoatStatus">Состояние</TextBox>
+                <TextBlock Margin="5,2" Text="Название" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="1"
+                       Visibility="{Binding ElementName=FullName, Path=RoatName.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Grid.Row="1" Name="RoatName" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                <TextBlock Margin="5,2" Text="Описание" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="2"
+                       Visibility="{Binding ElementName=FullName, Path=RoatDescript.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Grid.Row="2" Name="RoatDescript" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                <TextBlock Margin="5,2" Text="Страна" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="3"
+                       Visibility="{Binding ElementName=FullName, Path=RoatCity.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Grid.Row="3" Name="RoatCity" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                <TextBlock Margin="5,2" Text="Город" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="4"
+                       Visibility="{Binding ElementName=FullName, Path=RoatContry.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Grid.Row="4" Name="RoatContry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                <TextBlock Margin="5,2" Text="Длительность" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="5"
+                       Visibility="{Binding ElementName=FullName, Path=RoatDuration.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Grid.Row="5" Name="RoatDuration" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                <TextBlock Margin="5,2" Text="Тип" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="6"
+                       Visibility="{Binding ElementName=FullName, Path=RoatType.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Grid.Row="6" Name="RoatType" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                <TextBlock Margin="5,2" Text="Состояние" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="7"
+                       Visibility="{Binding ElementName=FullName, Path=RoatStatus.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Grid.Row="7" Name="RoatStatus" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
                 <Button Grid.Row="8" Name="Change_Route" >Изменить маршрут</Button>
                 <ListBox Grid.Row="9" Name="ListDot" SelectionChanged="ListDot_SelectionChanged"></ListBox>
 
@@ -131,10 +185,18 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBox Grid.Row="0" Name="DotName">Название</TextBox>
-                    <TextBox Grid.Row="1" Name="DotDescript">Описание</TextBox>
-                    <TextBox Grid.Row="2" Name="DotCoord">Координаты</TextBox>
-                    <TextBox Grid.Row="3" Name="DotImage">Изображение</TextBox>
+                    <TextBlock Margin="5,2" Text="Название" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="0"
+                       Visibility="{Binding ElementName=FullName, Path=DotName.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBox Grid.Row="0" Name="DotName" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                    <TextBlock Margin="5,2" Text="Описание" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="1"
+                       Visibility="{Binding ElementName=FullName, Path=DotDescript.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBox Grid.Row="1" Name="DotDescript" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                    <TextBlock Margin="5,2" Text="Координаты" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="2"
+                       Visibility="{Binding ElementName=FullName, Path=DotCoord.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBox Grid.Row="2" Name="DotCoord" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                    <TextBlock Margin="5,2" Text="Изображение" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="3"
+                       Visibility="{Binding ElementName=FullName, Path=DotImage.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBox Grid.Row="3" Name="DotImage" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
                     <Button Grid.Row="4" Name="DotSave" IsEnabled="False" Click="DotSave_Click">Сохранить</Button>
                 </Grid>
                 <Grid Grid.Row="11">
@@ -143,7 +205,7 @@
                         <RowDefinition Height="2*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <ComboBox Grid.Row="0">Название</ComboBox>
-                    <TextBox Grid.Row="1">Описание</TextBox>
+                    <TextBlock Grid.Row="1">Описание</TextBlock>
                 </Grid>
             </Grid>
         </Grid>
