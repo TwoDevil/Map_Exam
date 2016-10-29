@@ -60,6 +60,7 @@ namespace Map_Exam
                     Lpll.Add(pointFirst);
                 else
                     Lpll[index] = pointFirst;
+                changeDot = false;
             }
             public GMapRoute RoutAdd(RoutingProvider rp)
             {
@@ -72,7 +73,19 @@ namespace Map_Exam
                 gMapRoute = new GMapRoute(ps);
                 return gMapRoute;
             }
+            public List<GMapMarker> GetAllMarker(bool b = true)
+            {
+                List<GMapMarker> Lgmm = new List<GMapMarker>();
 
+                for (int i = 0; i < Lpll.Count; i++)
+                {
+                    gMapMarker = new GMapMarker(Lpll[i]);
+                    if (b && i == index)
+                        gMapMarker = new GMapMarker(pointFirst);
+                    Lgmm.Add(gMapMarker);
+                }
+                return Lgmm;
+            }
         }
 
         Doting dot = new Doting();
@@ -114,6 +127,10 @@ namespace Map_Exam
                             Width = 600;
                             RegistrRow.Height = new GridLength(0, GridUnitType.Star);
                             MapRow.Height = new GridLength(1, GridUnitType.Star);
+                            if (true) 
+                            {
+                                ReportsRoat.Height = new GridLength(0, GridUnitType.Star);
+                            }
                         }
                     }
                     else
@@ -122,12 +139,10 @@ namespace Map_Exam
                 }
                 catch { }
         }
-
         private void Button_Click_Login(object sender, RoutedEventArgs e)
         {
             LoginToMap();
         }
-
         private void Button_Click_Registr(object sender, RoutedEventArgs e)
         {
             if (!fullNameRegistr)
@@ -144,7 +159,6 @@ namespace Map_Exam
                     catch { }
             fullNameRegistr = true;
         }
-
         private void gmap_Loaded(object sender, RoutedEventArgs e)
         {
             gmap.MapProvider = BingMapProvider.Instance;
@@ -152,31 +166,40 @@ namespace Map_Exam
             gmap.SetPositionByKeywords("Paris, France");
 
         }
-
         private void gmap_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (createWarpPoint)
+            if (createWarpPoint && ListDot.SelectedIndex != -1)
             {
                 Point p = e.GetPosition(gmap);
-                if (dot.changeDot)
-                    gmap.Markers.Remove(dot.gMapMarker);
+                //if (dot.changeDot)
+                //    gmap.Markers.Remove(dot.gMapMarker);
 
-                dot.SetDot(gmap.FromLocalToLatLng((int)p.X, (int)p.Y));        
-                gmap.Markers.Add(dot.gMapMarker);
+                dot.SetDot(gmap.FromLocalToLatLng((int)p.X, (int)p.Y));
+                
+                gmap.Markers.Clear();
 
+                foreach (var item in dot.GetAllMarker())
+                    gmap.Markers.Add(item);
+
+                GMapMarker gMapMarker = new GMapMarker(gmap.FromLocalToLatLng((int)p.X, (int)p.Y));
+                gMapMarker.Shape = new Ellipse() { Width = 10, Height = 10, Fill = Brushes.Yellow };
+                gmap.Markers.Add(gMapMarker);
+
+                gmap.Markers.Add(dot.RoutAdd(gmap.MapProvider as RoutingProvider));
+
+                dot.changeDot = true;
                 DotSave.IsEnabled = true;
                 Create_Map.IsEnabled = false;
 
                 DotCoord.Text = e.GetPosition(gmap).ToString();
 
+                /*int index = ListDot.SelectedIndex;
                 ListDot.Items.Clear();
                 foreach (var item in dot.Lpll)
                     ListDot.Items.Add(item.Lng.ToString()+" "+item.Lat.ToString());
-                ListDot.Items.Add("ok");
-
-                
+                ListDot.Items.Add("new");
+                ListDot.SelectedIndex = index;*/
             }
-            createWarpPoint = false;
         }
 
         private void Create_Map_Click(object sender, RoutedEventArgs e)
@@ -184,7 +207,7 @@ namespace Map_Exam
             if (createWarpPoint)
             {
                 //gmap.Markers.Remove(dot.gMapRoute);
-                gmap.Markers.Add(dot.RoutAdd(gmap.MapProvider as RoutingProvider));
+                //gmap.Markers.Add(dot.RoutAdd(gmap.MapProvider as RoutingProvider));
 
                 Create_Map.Content = "Создать машрут";
                 DotSave.IsEnabled = false;
@@ -194,10 +217,10 @@ namespace Map_Exam
             {
                 dot = new Doting();
                 Create_Map.Content = "Закончить машрут";
-                //DotSave.IsEnabled = true;
                 createWarpPoint = true;
                 ListDot.Items.Clear();
-                ListDot.Items.Add("ok");
+                ListDot.Items.Add("new");
+                ListDot.SelectedIndex = 0;
             }
             createMap = !createMap;
             
@@ -218,7 +241,6 @@ namespace Map_Exam
             }
             b = !b;
         }
-
         private void ListRoat_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ListRoat.SelectedIndex != -1)
@@ -243,7 +265,7 @@ namespace Map_Exam
                     ListDot.Items.Clear();
                     while (res.Read())
                         ListDot.Items.Add(res[0].ToString());
-                    ListDot.Items.Add("ok");
+                    ListDot.Items.Add("new");
                     ListDot.SelectedIndex = ListDot.Items.Count - 1;
 
                     com = new OracleCommand("SELECT name,Country,City,Duration_Day,type,Description,Full_Name FROM roat INNER JOIN USERS ON users.ID=ID_User"
@@ -264,35 +286,39 @@ namespace Map_Exam
                 }
                 catch { }
         }
-
         private void ListDot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-             if (ListDot.SelectedIndex != -1)
-                 if (ListDot.SelectedItem.ToString() == "ok")
-                 {
-                     DotName.Text = "";
-                     DotDescript.Text = "";
-                     DotCoord.Text = "";
-                     DotImage.Text = "";
-                     dot.index = ListDot.SelectedIndex;
-                 }
-                 else
-                     try
-                     {
-                         OracleCommand com = new OracleCommand("SELECT name,Coordinates,Description,Image FROM Waypoint INNER JOIN Roat ON Roat.ID=id_Roat WHERE Waypoint.Name='"
-                             + ListDot.SelectedItem.ToString() + "'", oracleConn);
+            if (ListDot.SelectedIndex != -1)
+            {
+                if (ListDot.SelectedItem.ToString() == "new")
+                {
+                    DotName.Text = "";
+                    DotDescript.Text = "";
+                    DotCoord.Text = "";
+                    DotImage.Text = "";
+                }
+                else
+                    try
+                    {
+                        OracleCommand com = new OracleCommand("SELECT name,Coordinates,Description,Image FROM Waypoint INNER JOIN Roat ON Roat.ID=id_Roat WHERE Waypoint.Name='"
+                            + ListDot.SelectedItem.ToString() + "'", oracleConn);
 
-                         var res = com.ExecuteReader();
-                         while (res.Read())
-                         {
-                             DotName.Text = res[0].ToString();
-                             DotDescript.Text = res[2].ToString();
-                             DotCoord.Text = res[1].ToString();
-                             DotImage.Text = res[3].ToString();
-                         }
-                         dot.index = ListDot.SelectedIndex;
-                     }
-                     catch { }
+                        dot.SetDot(dot.Lpll[ListDot.SelectedIndex]);//
+                        dot.changeDot = true;
+
+                        var res = com.ExecuteReader();
+                        while (res.Read())
+                        {
+                            DotName.Text = res[0].ToString();
+                            DotDescript.Text = res[2].ToString();
+                            DotCoord.Text = res[1].ToString();
+                            DotImage.Text = res[3].ToString();
+                        }
+
+                    }
+                    catch { }
+                dot.index = ListDot.SelectedIndex;
+            }
 
         }
 
@@ -377,21 +403,26 @@ namespace Map_Exam
 
         private void DotSave_Click(object sender, RoutedEventArgs e)
         {
-            if (createWarpPoint==false) 
-            {
+
                 //OracleCommand com = new OracleCommand("SELECT Full_Name FROM USERS WHERE Status='1'", oracleConn);
                 //var res = com.ExecuteReader();
                 dot.AddDot();
                 ListDot.Items.Clear();
                 foreach (var item in dot.Lpll)
                     ListDot.Items.Add(item.ToString());
-                ListDot.Items.Add("ok");
-                ListDot.SelectedIndex = ListDot.Items.Count - 1;
+                ListDot.Items.Add("new");
+                ListDot.SelectedIndex = -1;
 
-                createWarpPoint = true;
                 DotSave.IsEnabled = false;
                 Create_Map.IsEnabled = true;
-            }
+                dot.changeDot = false;
+
+                gmap.Markers.Clear();
+
+                foreach (var item in dot.GetAllMarker())
+                    gmap.Markers.Add(item);
+
+                gmap.Markers.Add(dot.RoutAdd(gmap.MapProvider as RoutingProvider));
             
         }
     }
