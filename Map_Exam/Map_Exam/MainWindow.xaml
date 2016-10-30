@@ -23,8 +23,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Name="RegistrRow"></RowDefinition>
-            <RowDefinition Name="MapRow"  Height="0"> </RowDefinition>
+            <RowDefinition Name="RegistrRow"  ></RowDefinition>
+            <RowDefinition Name="MapRow" Height="0"> </RowDefinition>
             <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
 
