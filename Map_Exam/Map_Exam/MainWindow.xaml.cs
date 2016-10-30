@@ -100,11 +100,12 @@ namespace Map_Exam
             Width = 400;
             try
             {
+                //тест 
                 //oracleConn = new OracleConnection("Data Source=192.168.0.100;User Id=Sheun;Password=1111;");
                 oracleConn = new OracleConnection("Data Source=192.168.1.108;User Id=malyh;Password=1111;");
                 oracleConn.Open();
             }
-            catch
+            catch (Exception e)
             {
                 oracleConn.Close();
                 Close();
@@ -186,7 +187,6 @@ namespace Map_Exam
             gmap.MapProvider = BingMapProvider.Instance;
             gmap.ShowCenter = false;
             gmap.SetPositionByKeywords("Paris, France");
-
 
         }
         private void gmap_MouseDoubleClick(object sender, MouseButtonEventArgs e)
