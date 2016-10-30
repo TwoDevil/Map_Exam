@@ -229,13 +229,11 @@ namespace Map_Exam
             dot = new Doting();
             ListDot.Items.Clear();
             ListDot.SelectedIndex = -1;
-            RoatCommentOrReports.Height = new GridLength(120);
             MenuRight.Width = new GridLength(150);
             RoatName.Text = "";
-            RoatContry.Text = "";
-            RoatCity.Text = "";
             RoatDuration.Text = "";
             RoatDescript.Text = "";
+            CheckDost.IsEnabled = false;
 
             OracleCommand com = new OracleCommand("SELECT FULL_NAME FROM USERS WHERE ID='" + id_User.ToString() + "'", oracleConn);
 

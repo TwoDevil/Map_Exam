@@ -23,8 +23,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Name="RegistrRow"  ></RowDefinition>
-            <RowDefinition Name="MapRow" Height="0"> </RowDefinition>
+            <RowDefinition Name="RegistrRow"  Height="0"></RowDefinition>
+            <RowDefinition Name="MapRow" > </RowDefinition>
             <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
 
@@ -168,7 +168,7 @@
                 <TextBlock Margin="5,2" Text="Состояние" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="6"
                        Visibility="{Binding ElementName=RoatStatus, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <TextBox Grid.Row="6" Name="RoatStatus" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
-                <CheckBox Grid.Row="7">Открытый доступ</CheckBox>
+                <CheckBox Grid.Row="7" Name="CheckDost">Открытый доступ</CheckBox>
                 <Button Grid.Row="8" Name="Change_Route" Click="Change_Route_Click">Сохранить маршрут</Button>
                 <ListBox Grid.Row="9" Name="ListDot" SelectionChanged="ListDot_SelectionChanged"></ListBox>
 
