@@ -115,3 +115,6 @@ G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.exe
 G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.pdb
 G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.csprojResolveAssemblyReference.cache
 G:\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam_MarkupCompile.lref
+C:\Users\admin\Desktop\Git\Map_Exam\Map_Exam\bin\Debug\Map_Exam.exe.config
+C:\Users\admin\Desktop\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.exe
+C:\Users\admin\Desktop\Git\Map_Exam\Map_Exam\obj\Debug\Map_Exam.pdb
