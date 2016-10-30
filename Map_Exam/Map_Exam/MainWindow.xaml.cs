@@ -233,7 +233,6 @@ namespace Map_Exam
             RoatContry.Text = "";
             RoatCity.Text = "";
             RoatDuration.Text = "";
-            RoatType.Text = "";
             RoatDescript.Text = "";
 
             OracleCommand com = new OracleCommand("SELECT FULL_NAME FROM USERS WHERE ID='" + id_User.ToString() + "'", oracleConn);
@@ -305,7 +304,6 @@ namespace Map_Exam
                         RoatContry.Text = res[1].ToString();
                         RoatCity.Text = res[2].ToString();
                         RoatDuration.Text = res[3].ToString();
-                        RoatType.Text = res[4].ToString();
                         RoatDescript.Text = res[5].ToString();
                         UserName.Text = res[6].ToString();
                         id_Roat = int.Parse(res[7].ToString());
@@ -435,7 +433,7 @@ namespace Map_Exam
         private void Change_Route_Click(object sender, RoutedEventArgs e)
         {
 
-            if (RoatCity.Text != null && RoatContry.Text != null && RoatName.Text != null && RoatDuration.Text != null && RoatType.Text != null && RoatDescript.Text != null && UserName.Text != null)
+            if (RoatCity.Text != null && RoatContry.Text != null && RoatName.Text != null && RoatDuration.Text != null && RoatDescript.Text != null && UserName.Text != null)
                 try
                 {
                     string idUser = null;
@@ -446,9 +444,8 @@ namespace Map_Exam
                         idUser = resUser[0].ToString();
 
                     com = new OracleCommand("INSERT INTO Roat(name,Country,City,Duration_Day,type,Description,id_user) VALUES('"
-                    + RoatName.Text + "','" + RoatContry.Text +
-                     RoatCity.Text + "','" + RoatDuration.Text +
-                     RoatType.Text + "','" + RoatDescript.Text +
+                    + RoatName.Text + "','" + RoatContry.Text + "','"+
+                     RoatCity.Text + "','" + RoatDuration.Text + "','public','" + RoatDescript.Text + "','"+
                      idUser + "')", oracleConn);
                     var res = com.ExecuteReader();
 

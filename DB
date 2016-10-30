@@ -1,3 +1,10 @@
+DROP TABLE WAYPOINT;
+DROP TABLE REPORTS;
+DROP TABLE COMMENTS;
+DROP TABLE ROAT;
+DROP TABLE LIKES;
+DROP TABLE USERS;
+
 CREATE TABLE USERS(
 Id number(10) NOT NULL PRIMARY KEY, 
 Full_Name nvarchar2(50) NOT NULL,
@@ -5,6 +12,10 @@ Login nvarchar2(50) NOT NULL,
 Password nvarchar2(50) NOT NULL,
 Status nvarchar2(10)
 );
+
+  INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Dimas','Diman','1111','user');
+  INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Oleg','Sheun','1111','user');
+  
 INSERT INTO Country(Name_Country) VALUES('France');
 INSERT INTO Country(Name_Country) VALUES('Ukraine');
 CREATE TABLE Country(
@@ -251,8 +262,7 @@ CREATE or REPLACE FUNCTION get_user(user_login IN NVARCHAR2,user_password in NVA
     
   Select * FROM Users;
   
-  INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Dimas','Diman','1111','user');
-  INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Oleg','Sheun','1111','user');
+
   
   
   

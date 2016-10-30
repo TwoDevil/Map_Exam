@@ -23,8 +23,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Name="RegistrRow" Height="0"></RowDefinition>
-            <RowDefinition Name="MapRow" > </RowDefinition>
+            <RowDefinition Name="RegistrRow"></RowDefinition>
+            <RowDefinition Name="MapRow"  Height="0"> </RowDefinition>
             <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
 
@@ -148,7 +148,6 @@
                     <RowDefinition Height="20"></RowDefinition>
                     <RowDefinition Height="20"></RowDefinition>
                     <RowDefinition Height="20"></RowDefinition>
-                    <RowDefinition Height="20"></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="140" Name="DotRoat"></RowDefinition>
                     <RowDefinition Height="60" Name="CommentRoat"></RowDefinition>
@@ -165,17 +164,15 @@
                 <TextBlock Margin="5,2" Text="Длительность" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="5"
                        Visibility="{Binding ElementName=RoatDuration, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <TextBox Grid.Row="5" Name="RoatDuration" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
-                <TextBlock Margin="5,2" Text="Тип" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="6"
-                       Visibility="{Binding ElementName=RoatType, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <TextBox Grid.Row="6" Name="RoatType" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
-                <TextBlock Margin="5,2" Text="Состояние" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="7"
+                
+                <TextBlock Margin="5,2" Text="Состояние" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="6"
                        Visibility="{Binding ElementName=RoatStatus, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <TextBox Grid.Row="7" Name="RoatStatus" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
-                <CheckBox Grid.Row="8">Открытый доступ</CheckBox>
-                <Button Grid.Row="9" Name="Change_Route" Click="Change_Route_Click">Сохранить маршрут</Button>
-                <ListBox Grid.Row="10" Name="ListDot" SelectionChanged="ListDot_SelectionChanged"></ListBox>
+                <TextBox Grid.Row="6" Name="RoatStatus" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                <CheckBox Grid.Row="7">Открытый доступ</CheckBox>
+                <Button Grid.Row="8" Name="Change_Route" Click="Change_Route_Click">Сохранить маршрут</Button>
+                <ListBox Grid.Row="9" Name="ListDot" SelectionChanged="ListDot_SelectionChanged"></ListBox>
 
-                <Grid Grid.Row="11">
+                <Grid Grid.Row="10">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
@@ -199,7 +196,7 @@
                     <Button Grid.Row="4" Name="DotSave" IsEnabled="False" Click="DotSave_Click">Сохранить</Button>
                     <Button Grid.Row="5" Name="DotClear" IsEnabled="False" Click="DotClear_Click">Удалить</Button>
                 </Grid>
-                <Grid Grid.Row="12">
+                <Grid Grid.Row="11">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
