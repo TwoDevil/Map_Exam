@@ -21,7 +21,8 @@ Id_Country number(10) NOT NULL,
 CONSTRAINT FK_Cities_Country FOREIGN KEY (id_Country) REFERENCES Country(Id) 
 );
 
-INSERT INTO Waypoint(Id_roat,Name,Coordinates,Description,Image) VALUES(1,'Test','11,11','Test','test.png');
+
+INSERT INTO Waypoint(Id_roat,Name,Coordinates,Description,Image) VALUES(4,'Test','11,11','Test','test.png');
 CREATE TABLE Waypoint(
 Id number(10) NOT NULL PRIMARY KEY, 
 id_Roat number(10) NOT NULL,
@@ -32,7 +33,7 @@ Image nvarchar2(50),
 CONSTRAINT FK_Waypoint_Roat FOREIGN KEY (id_Roat) REFERENCES Roat(Id) 
 );
 
-INSERT INTO Roat(Id_User,Name,Country,City,Duration_Day) VALUES(1,'TestRoat','Test Country','Test City',5);
+INSERT INTO Roat(Id_User,Name,Id_Country,Id_City,Duration_Day) VALUES(1,'TestRoat', 1,21,5);
 
 CREATE TABLE Roat(
 Id number(10) NOT NULL PRIMARY KEY, 
@@ -48,7 +49,7 @@ CONSTRAINT FK_Roat_Country FOREIGN KEY (Id_Country) REFERENCES Country(Id),
 CONSTRAINT FK_Roat_City FOREIGN KEY (Id_City) REFERENCES Cities(Id)
 );
 
-
+INSERT INTO Comments(Id_User,Id_Roat,Description)VALUES(1,4,'Test Description');
 CREATE TABLE Comments(
 Id number(10) NOT NULL PRIMARY KEY, 
 Id_User number(10) NOT NULL,
@@ -58,6 +59,7 @@ CONSTRAINT FK_Comments_Id_User FOREIGN KEY (Id_User) REFERENCES Users(Id),
 CONSTRAINT FK_Comments_Id_Roat FOREIGN KEY (Id_Roat) REFERENCES Roat(Id)
 );
 
+INSERT INTO Likes(Id_User,Id_Roat,Likes)VALUES(1,4,1);
 create table Likes(
 Id number(10) NOT NULL PRIMARY KEY, 
 Id_User number(10) NOT NULL,
@@ -66,7 +68,7 @@ Likes number NOT NULL,
 CONSTRAINT FK_Likes_Id_User FOREIGN KEY (Id_User) REFERENCES Users(Id),
 CONSTRAINT FK_Likes_Id_Roat FOREIGN KEY (Id_Roat) REFERENCES Roat(Id)
 );
-
+INSERT INTO Reports(Id_User,Id_Roat,Description)VALUES(1,4,'Test Description reports');
 CREATE TABLE Reports(
 Id number(10) NOT NULL PRIMARY KEY, 
 Id_User number(10) NOT NULL,
@@ -160,7 +162,7 @@ BEGIN
 END;
 
  CREATE OR REPLACE TRIGGER Triger_Insert_Comments
-   BEFORE INSERT ON Users
+   BEFORE INSERT ON Comments
    FOR EACH ROW
    WHEN (NEW.ID IS NULL)
 BEGIN
@@ -168,7 +170,7 @@ BEGIN
 END;
 
  CREATE OR REPLACE TRIGGER Triger_Insert_Likes
-   BEFORE INSERT ON Users
+   BEFORE INSERT ON Likes
    FOR EACH ROW
    WHEN (NEW.ID IS NULL)
 BEGIN
@@ -177,7 +179,7 @@ END;
 
 
  CREATE OR REPLACE TRIGGER Triger_Insert_Reports
-   BEFORE INSERT ON Users
+   BEFORE INSERT ON Reports
    FOR EACH ROW
    WHEN (NEW.ID IS NULL)
 BEGIN
@@ -185,7 +187,7 @@ BEGIN
 END;
 
  CREATE OR REPLACE TRIGGER Triger_Insert_Roat
-   BEFORE INSERT ON Users
+   BEFORE INSERT ON Roat
    FOR EACH ROW
    WHEN (NEW.ID IS NULL)
 BEGIN
@@ -194,7 +196,7 @@ END;
 
 
  CREATE OR REPLACE TRIGGER Triger_Insert_Waypoint
-   BEFORE INSERT ON Users
+   BEFORE INSERT ON WayPoint
    FOR EACH ROW
    WHEN (NEW.ID IS NULL)
 BEGIN
