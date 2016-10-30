@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Map_Exam"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="600">
+        Title="MainWindow" Height="500" Width="600" Loaded="Window_Loaded">
     <Window.Resources>
 
         <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
@@ -23,8 +23,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Name="RegistrRow" ></RowDefinition>
-            <RowDefinition Name="MapRow" Height="0"> </RowDefinition>
+            <RowDefinition Name="RegistrRow" Height="0"></RowDefinition>
+            <RowDefinition Name="MapRow" > </RowDefinition>
             <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
 
@@ -58,8 +58,8 @@
             
             <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Логин</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">Пароль</TextBlock>
-            <TextBox Grid.Column="1" Grid.Row="0" Name="Login" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
-            <TextBox Grid.Column="1" Grid.Row="1" Name="Password" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+            <TextBox Grid.Column="1" Grid.Row="0" Name="Login" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}">Diman</TextBox>
+            <TextBox Grid.Column="1" Grid.Row="1" Name="Password" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}">1111</TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">Полное имя</TextBlock>
             <TextBox Grid.Column="1" Grid.Row="2" Name="FullName" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
             <Button Grid.Column="1" Grid.Row="3" Click="Button_Click_Login">Вход</Button>
@@ -70,8 +70,8 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Name="MenuRight" Width="150"></ColumnDefinition>
                 <ColumnDefinition Name="MenuLeft" Width="150"></ColumnDefinition>
+                <ColumnDefinition Name="MenuRight" Width="150"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -98,7 +98,7 @@
                     <RowDefinition Height="20"></RowDefinition>
                     <RowDefinition Height="20"></RowDefinition>
                     <RowDefinition></RowDefinition>
-                    <RowDefinition Height="120"></RowDefinition>
+                    <RowDefinition Height="120" Name="RoatCommentOrReports"></RowDefinition>
                     <RowDefinition Height="60" Name="ReportsRoat"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" HorizontalAlignment="Center"></TextBlock>
@@ -132,7 +132,7 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <ComboBox Grid.Row="0">Название</ComboBox>
+                    <ComboBox Grid.Row="0" Name="ReportsMessage">Название</ComboBox>
                     <TextBlock Grid.Row="1">Описание</TextBlock>
                 </Grid>
 
@@ -148,8 +148,9 @@
                     <RowDefinition Height="20"></RowDefinition>
                     <RowDefinition Height="20"></RowDefinition>
                     <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="20"></RowDefinition>
                     <RowDefinition></RowDefinition>
-                    <RowDefinition Height="120"></RowDefinition>
+                    <RowDefinition Height="140" Name="DotRoat"></RowDefinition>
                     <RowDefinition Height="60" Name="CommentRoat"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Name="UserName" HorizontalAlignment="Center">Имя пользователя</TextBlock>
@@ -159,12 +160,8 @@
                 <TextBlock Margin="5,2" Text="Описание" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="2"
                        Visibility="{Binding ElementName=RoatDescript, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <TextBox Grid.Row="2" Name="RoatDescript" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
-                <TextBlock Margin="5,2" Text="Страна" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="3"
-                       Visibility="{Binding ElementName=RoatCity, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <TextBox Grid.Row="3" Name="RoatCity" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
-                <TextBlock Margin="5,2" Text="Город" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="4"
-                       Visibility="{Binding ElementName=RoatContry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <TextBox Grid.Row="4" Name="RoatContry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
+                <ComboBox Grid.Row="3" Name="RoatCity"></ComboBox>
+                <ComboBox Grid.Row="4" Name="RoatContry"></ComboBox>
                 <TextBlock Margin="5,2" Text="Длительность" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="5"
                        Visibility="{Binding ElementName=RoatDuration, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <TextBox Grid.Row="5" Name="RoatDuration" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
@@ -174,13 +171,15 @@
                 <TextBlock Margin="5,2" Text="Состояние" Foreground="{StaticResource brushWatermarkForeground}" Grid.Row="7"
                        Visibility="{Binding ElementName=RoatStatus, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <TextBox Grid.Row="7" Name="RoatStatus" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
-                <Button Grid.Row="8" Name="Change_Route" >Изменить маршрут</Button>
-                <ListBox Grid.Row="9" Name="ListDot" SelectionChanged="ListDot_SelectionChanged"></ListBox>
+                <CheckBox Grid.Row="8">Открытый доступ</CheckBox>
+                <Button Grid.Row="9" Name="Change_Route" Click="Change_Route_Click">Сохранить маршрут</Button>
+                <ListBox Grid.Row="10" Name="ListDot" SelectionChanged="ListDot_SelectionChanged"></ListBox>
 
-                <Grid Grid.Row="10">
+                <Grid Grid.Row="11">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
@@ -198,13 +197,14 @@
                        Visibility="{Binding ElementName=DotImage, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     <TextBox Grid.Row="3" Name="DotImage" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}"></TextBox>
                     <Button Grid.Row="4" Name="DotSave" IsEnabled="False" Click="DotSave_Click">Сохранить</Button>
+                    <Button Grid.Row="5" Name="DotClear" IsEnabled="False" Click="DotClear_Click">Удалить</Button>
                 </Grid>
-                <Grid Grid.Row="11">
+                <Grid Grid.Row="12">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <ComboBox Grid.Row="0">Название</ComboBox>
+                    <ComboBox Grid.Row="0" Name="DotComent"></ComboBox>
                     <TextBlock Grid.Row="1">Описание</TextBlock>
                 </Grid>
             </Grid>

@@ -27,7 +27,6 @@ namespace Map_Exam
     {
         public class Doting
         {
-            public bool changeDot { get; set; }
             public int index { get; set; }
             public List<PointLatLng> Lpll { get; set; }
             PointLatLng pointFirst { get; set; }
@@ -60,7 +59,6 @@ namespace Map_Exam
                     Lpll.Add(pointFirst);
                 else
                     Lpll[index] = pointFirst;
-                changeDot = false;
             }
             public GMapRoute RoutAdd(RoutingProvider rp)
             {
@@ -89,9 +87,9 @@ namespace Map_Exam
         }
 
         Doting dot = new Doting();
-        bool createMap { get; set; }
-        bool createWarpPoint { get; set; }
+        public bool moderator { get; set; }
         int id_User { get; set; }
+        int id_Roat { get; set; }
         OracleConnection oracleConn { get; set; }
         bool fullNameRegistr { get; set; }
 
@@ -111,7 +109,7 @@ namespace Map_Exam
                 Close();
             }
         }
-        public void LoginToMap()
+        public void LoginToMap(bool reg = false)
         {
             if (Login.Text != null && Password.Text != null)
                 try
@@ -127,15 +125,38 @@ namespace Map_Exam
                             Width = 600;
                             RegistrRow.Height = new GridLength(0, GridUnitType.Star);
                             MapRow.Height = new GridLength(1, GridUnitType.Star);
-                            if (true) 
-                            {
+
+                            com = new OracleCommand("SELECT STATUS FROM USERS WHERE ID='" + id_User.ToString() + "' ", oracleConn);
+
+                            var resid = com.ExecuteReader();
+                            if (resid.Read())
+                                if (res[0].ToString() == "admin")
+                                    moderator = true;
+
+                            if (!moderator)
                                 ReportsRoat.Height = new GridLength(0, GridUnitType.Star);
+                            else
+                            {
+                                com = new OracleCommand("SELECT ID FROM Reports WHERE Id_User_Moderator='" + id_User.ToString() + "'", oracleConn);
+                                var res2 = com.ExecuteReader();
+                                while (res2.Read())
+                                    ComboModer.Items.Add(res2[0].ToString());
                             }
+                            But_Filtr_Click(null, null);
+                            DotRoat.Height = new GridLength(0);
+                            RoatCommentOrReports.Height = new GridLength(0);
+                            MenuRight.Width = new GridLength(0);
+                        }
+
+                        else
+                        {
+                            if (reg)
+                                MessageBox.Show("Такой логин уже существует");
+                            else
+                                MessageBox.Show("Неправильный логин или пароль");
                         }
                     }
-                    else
-                    {
-                    }
+
                 }
                 catch { }
         }
@@ -146,7 +167,7 @@ namespace Map_Exam
         private void Button_Click_Registr(object sender, RoutedEventArgs e)
         {
             if (!fullNameRegistr)
-                FullNameRegistr.Height = new GridLength(1,GridUnitType.Star);
+                FullNameRegistr.Height = new GridLength(1, GridUnitType.Star);
             else
                 if (Login.Text != null && Password.Text != null && FullName.Text != null)
                     try
@@ -168,14 +189,14 @@ namespace Map_Exam
         }
         private void gmap_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (createWarpPoint && ListDot.SelectedIndex != -1)
+            if (ListDot.SelectedIndex != -1)
             {
                 Point p = e.GetPosition(gmap);
                 //if (dot.changeDot)
                 //    gmap.Markers.Remove(dot.gMapMarker);
 
                 dot.SetDot(gmap.FromLocalToLatLng((int)p.X, (int)p.Y));
-                
+
                 gmap.Markers.Clear();
 
                 foreach (var item in dot.GetAllMarker())
@@ -187,7 +208,6 @@ namespace Map_Exam
 
                 gmap.Markers.Add(dot.RoutAdd(gmap.MapProvider as RoutingProvider));
 
-                dot.changeDot = true;
                 DotSave.IsEnabled = true;
                 Create_Map.IsEnabled = false;
 
@@ -204,39 +224,42 @@ namespace Map_Exam
 
         private void Create_Map_Click(object sender, RoutedEventArgs e)
         {
-            if (createWarpPoint)
-            {
-                //gmap.Markers.Remove(dot.gMapRoute);
-                //gmap.Markers.Add(dot.RoutAdd(gmap.MapProvider as RoutingProvider));
+            dot = new Doting();
+            ListDot.Items.Clear();
+            ListDot.SelectedIndex = -1;
+            RoatCommentOrReports.Height = new GridLength(120);
+            MenuRight.Width = new GridLength(150);
+            RoatName.Text = "";
+            RoatContry.Text = "";
+            RoatCity.Text = "";
+            RoatDuration.Text = "";
+            RoatType.Text = "";
+            RoatDescript.Text = "";
 
-                Create_Map.Content = "Создать машрут";
-                DotSave.IsEnabled = false;
-                createWarpPoint = false;
-            }
-            else
-            {
-                dot = new Doting();
-                Create_Map.Content = "Закончить машрут";
-                createWarpPoint = true;
-                ListDot.Items.Clear();
-                ListDot.Items.Add("new");
-                ListDot.SelectedIndex = 0;
-            }
-            createMap = !createMap;
-            
+            OracleCommand com = new OracleCommand("SELECT FULL_NAME FROM USERS WHERE ID='" + id_User.ToString() + "'", oracleConn);
+
+            var res = com.ExecuteReader();
+            while (res.Read())
+                UserName.Text = res[0].ToString();
+
         }
 
         bool b = false;
+        bool b2 = false;
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (b)
             {
                 MenuLeft.Width = new GridLength(150);
-                MenuRight.Width = new GridLength(150);
+                if(!b2)
+                    MenuRight.Width = new GridLength(150);
+                b2 = false;
             }
             else
             {
                 MenuLeft.Width = new GridLength(0);
+                if (MenuRight.Width.Value == 0)
+                    b2 = true;
                 MenuRight.Width = new GridLength(0);
             }
             b = !b;
@@ -244,6 +267,10 @@ namespace Map_Exam
         private void ListRoat_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ListRoat.SelectedIndex != -1)
+            {
+                DotRoat.Height = new GridLength(140);
+                RoatCommentOrReports.Height = new GridLength(120);
+                MenuRight.Width = new GridLength(150);
                 try
                 {
                     OracleCommand com = null;
@@ -268,7 +295,7 @@ namespace Map_Exam
                     ListDot.Items.Add("new");
                     ListDot.SelectedIndex = ListDot.Items.Count - 1;
 
-                    com = new OracleCommand("SELECT name,Country,City,Duration_Day,type,Description,Full_Name FROM roat INNER JOIN USERS ON users.ID=ID_User"
+                    com = new OracleCommand("SELECT name,Country,City,Duration_Day,type,Description,Full_Name,ID FROM roat INNER JOIN USERS ON users.ID=ID_User"
                         , oracleConn);
 
                     var res2 = com.ExecuteReader();
@@ -281,10 +308,23 @@ namespace Map_Exam
                         RoatType.Text = res[4].ToString();
                         RoatDescript.Text = res[5].ToString();
                         UserName.Text = res[6].ToString();
+                        id_Roat = int.Parse(res[7].ToString());
                     }
+
+                    com = new OracleCommand("SELECT ID FROM Comments WHERE Id_Roat='" + id_Roat.ToString() + "'", oracleConn);
+                    var res3 = com.ExecuteReader();
+                    while (res3.Read())
+                        ComboModer.Items.Add(res3[0].ToString());
 
                 }
                 catch { }
+            }
+            else
+            {
+                DotRoat.Height = new GridLength(0);
+                RoatCommentOrReports.Height = new GridLength(0);
+                MenuRight.Width = new GridLength(0);
+            }
         }
         private void ListDot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -304,7 +344,6 @@ namespace Map_Exam
                             + ListDot.SelectedItem.ToString() + "'", oracleConn);
 
                         dot.SetDot(dot.Lpll[ListDot.SelectedIndex]);//
-                        dot.changeDot = true;
 
                         var res = com.ExecuteReader();
                         while (res.Read())
@@ -336,7 +375,7 @@ namespace Map_Exam
         private void But_Comment_Click(object sender, RoutedEventArgs e)
         {
             OracleCommand com = new OracleCommand("INSERT INTO Comments(Description,Id_User,Id_Roat) VALUES('"
-                    + Route_Descript.Text+ "',1,2)", oracleConn);
+                    + Route_Descript.Text + "',1,2)", oracleConn);
             var res = com.ExecuteReader();
         }
 
@@ -369,9 +408,33 @@ namespace Map_Exam
             }
             catch { }
         }
-
-        private void Save_Route_Click(object sender, RoutedEventArgs e)
+        private void DotSave_Click(object sender, RoutedEventArgs e)
         {
+
+            //OracleCommand com = new OracleCommand("SELECT Full_Name FROM USERS WHERE Status='1'", oracleConn);
+            //var res = com.ExecuteReader();
+            dot.AddDot();
+            ListDot.Items.Clear();
+            foreach (var item in dot.Lpll)
+                ListDot.Items.Add(item.ToString());
+            ListDot.Items.Add("new");
+            ListDot.SelectedIndex = -1;
+
+            DotSave.IsEnabled = false;
+            Create_Map.IsEnabled = true;
+
+            gmap.Markers.Clear();
+
+            foreach (var item in dot.GetAllMarker())
+                gmap.Markers.Add(item);
+
+            gmap.Markers.Add(dot.RoutAdd(gmap.MapProvider as RoutingProvider));
+
+        }
+
+        private void Change_Route_Click(object sender, RoutedEventArgs e)
+        {
+
             if (RoatCity.Text != null && RoatContry.Text != null && RoatName.Text != null && RoatDuration.Text != null && RoatType.Text != null && RoatDescript.Text != null && UserName.Text != null)
                 try
                 {
@@ -388,42 +451,29 @@ namespace Map_Exam
                      RoatType.Text + "','" + RoatDescript.Text +
                      idUser + "')", oracleConn);
                     var res = com.ExecuteReader();
+
+                    ListDot.Items.Add("new");
                 }
                 catch { }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void DotClear_Click(object sender, RoutedEventArgs e)
         {
-            //OracleCommand com = new OracleCommand("SELECT Full_Name FROM USERS WHERE Status='1'", oracleConn);
-            //var res = com.ExecuteReader();
-            //ComboModer.Items.Clear();
-            //while (res.Read())
-            //    ComboModer.Items.Add(res[0].ToString());
+            ListDot.Items.RemoveAt(ListDot.SelectedIndex);
         }
 
-        private void DotSave_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
-                //OracleCommand com = new OracleCommand("SELECT Full_Name FROM USERS WHERE Status='1'", oracleConn);
-                //var res = com.ExecuteReader();
-                dot.AddDot();
-                ListDot.Items.Clear();
-                foreach (var item in dot.Lpll)
-                    ListDot.Items.Add(item.ToString());
-                ListDot.Items.Add("new");
-                ListDot.SelectedIndex = -1;
-
-                DotSave.IsEnabled = false;
-                Create_Map.IsEnabled = true;
-                dot.changeDot = false;
-
-                gmap.Markers.Clear();
-
-                foreach (var item in dot.GetAllMarker())
-                    gmap.Markers.Add(item);
-
-                gmap.Markers.Add(dot.RoutAdd(gmap.MapProvider as RoutingProvider));
+            try
+            {
+                OracleCommand com = new OracleCommand("SELECT FULL_NAME FROM USERS WHERE STATUS='admin'", oracleConn);
+                var res2 = com.ExecuteReader();
+                while (res2.Read())
+                    ReportsMessage.Items.Add(res2[0].ToString());
+            }
+            catch { }
             
+
         }
     }
 }
