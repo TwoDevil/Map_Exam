@@ -4,7 +4,7 @@ DROP TABLE COMMENTS;
 DROP TABLE ROAT;
 DROP TABLE LIKES;
 DROP TABLE USERS;
-
+//айдишники нужно проверять потому что у меня SEQUENCE неправильно работают
 CREATE TABLE USERS(
 Id number(10) NOT NULL PRIMARY KEY, 
 Full_Name nvarchar2(50) NOT NULL,
@@ -12,7 +12,7 @@ Login nvarchar2(50) NOT NULL,
 Password nvarchar2(50) NOT NULL,
 Status nvarchar2(10)
 );
-
+//айдишники нужно проверять потому что у меня SEQUENCE неправильно работают
   INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Dimas','Diman','1111','user');
   INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Oleg','Sheun','1111','user');
   
@@ -32,8 +32,11 @@ Id_Country number(10) NOT NULL,
 CONSTRAINT FK_Cities_Country FOREIGN KEY (id_Country) REFERENCES Country(Id) 
 );
 
-
-INSERT INTO Waypoint(Id_roat,Name,Coordinates,Description,Image) VALUES(4,'Test','11,11','Test','test.png');
+//айдишники нужно проверять потому что у меня SEQUENCE неправильно работают
+INSERT INTO Waypoint(Id_roat,Name,Coordinates,Description,Image) VALUES(22,'Test','12,12','Test 1','test.png');
+INSERT INTO Waypoint(Id_roat,Name,Coordinates,Description,Image) VALUES(22,'Test','13,13','Test 2','test.png');
+INSERT INTO Waypoint(Id_roat,Name,Coordinates,Description,Image) VALUES(21,'Test','12,12','Test 3','test.png');
+INSERT INTO Waypoint(Id_roat,Name,Coordinates,Description,Image) VALUES(21,'Test','12,12','Test 4','test.png');
 CREATE TABLE Waypoint(
 Id number(10) NOT NULL PRIMARY KEY, 
 id_Roat number(10) NOT NULL,
@@ -43,8 +46,9 @@ Description nvarchar2(50),
 Image nvarchar2(50),
 CONSTRAINT FK_Waypoint_Roat FOREIGN KEY (id_Roat) REFERENCES Roat(Id) 
 );
-
-INSERT INTO Roat(Id_User,Name,Id_Country,Id_City,Duration_Day) VALUES(1,'TestRoat', 1,21,5);
+//айдишники нужно проверять потому что у меня SEQUENCE неправильно работают
+INSERT INTO Roat(Id_User,Name,Id_Country,Id_City,Duration_Day) VALUES(1,'TestRoat 2', 2,21,3);
+INSERT INTO Roat(Id_User,Name,Id_Country,Id_City,Duration_Day) VALUES(1,'TestRoat 2', 2,22,3);
 
 CREATE TABLE Roat(
 Id number(10) NOT NULL PRIMARY KEY, 
