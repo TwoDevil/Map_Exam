@@ -5,6 +5,7 @@ DROP TABLE ROAT;
 DROP TABLE LIKES;
 DROP TABLE USERS;
 //айдишники нужно проверять потому что у меня SEQUENCE неправильно работают
+
 CREATE TABLE USERS(
 Id number(10) NOT NULL PRIMARY KEY, 
 Full_Name nvarchar2(50) NOT NULL,
@@ -12,6 +13,11 @@ Login nvarchar2(50) NOT NULL,
 Password nvarchar2(50) NOT NULL,
 Status nvarchar2(10)
 );
+
+alter table USERS modify Status default 'User';
+
+
+
 //айдишники нужно проверять потому что у меня SEQUENCE неправильно работают
   INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Dimas','Diman','1111','user');
   INSERT INTO Users(Full_Name,Login,Password,Status) VALUES('Oleg','Sheun','1111','user');
@@ -22,6 +28,7 @@ CREATE TABLE Country(
 Id number(10) NOT NULL PRIMARY KEY, 
 Name_Country nvarchar2(50) NOT NULL
 );
+
 
 INSERT INTO Cities(Name_city,Id_Country) VALUES('Paris',1);
 INSERT INTO Cities(Name_city,Id_Country) VALUES('Odessa',2);
@@ -46,6 +53,9 @@ Description nvarchar2(50),
 Image nvarchar2(50),
 CONSTRAINT FK_Waypoint_Roat FOREIGN KEY (id_Roat) REFERENCES Roat(Id) 
 );
+alter table Waypoint modify Description default 'None';
+alter table Waypoint modify Image default 'None';
+
 //айдишники нужно проверять потому что у меня SEQUENCE неправильно работают
 INSERT INTO Roat(Id_User,Name,Id_Country,Id_City,Duration_Day) VALUES(1,'TestRoat 2', 2,21,3);
 INSERT INTO Roat(Id_User,Name,Id_Country,Id_City,Duration_Day) VALUES(1,'TestRoat 2', 2,22,3);
@@ -63,6 +73,9 @@ CONSTRAINT FK_Roat FOREIGN KEY (Id_User) REFERENCES Users(Id),
 CONSTRAINT FK_Roat_Country FOREIGN KEY (Id_Country) REFERENCES Country(Id),
 CONSTRAINT FK_Roat_City FOREIGN KEY (Id_City) REFERENCES Cities(Id)
 );
+alter table Roat modify Duration_Day default 1;
+alter table Roat modify Type default 'private';
+alter table Roat modify Description default 'None';
 
 INSERT INTO Comments(Id_User,Id_Roat,Description)VALUES(1,4,'Test Description');
 CREATE TABLE Comments(
@@ -73,6 +86,7 @@ Description nvarchar2(100) NOT NULL,
 CONSTRAINT FK_Comments_Id_User FOREIGN KEY (Id_User) REFERENCES Users(Id),
 CONSTRAINT FK_Comments_Id_Roat FOREIGN KEY (Id_Roat) REFERENCES Roat(Id)
 );
+
 
 INSERT INTO Likes(Id_User,Id_Roat,Likes)VALUES(1,4,1);
 create table Likes(
